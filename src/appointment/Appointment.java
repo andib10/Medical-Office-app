@@ -10,17 +10,17 @@ public class Appointment {
     private int AppointmentId;
     private MedicalStaff medic;
     private Patient patient;
-    private String dateOfAppointment;
+    private LocalDateTime timeOfAppointment;
     static int id = 0;
 
     {
         this.AppointmentId = ++id;
     }
 
-    public Appointment(MedicalStaff medic, Patient patient, String dateOfAppointment) {
+    public Appointment(MedicalStaff medic, Patient patient, LocalDateTime timeOfAppointment) {
         this.medic = medic;
         this.patient = patient;
-        this.dateOfAppointment = dateOfAppointment;
+        this.timeOfAppointment = timeOfAppointment;
     }
 
     public int getAppointmentId() {
@@ -34,7 +34,7 @@ public class Appointment {
                 "AppointmentId=" + AppointmentId +
                 ", medic=" + medic +
                 ", patient=" + patient +
-                ", dateOfAppointment=" + dateOfAppointment +
+                ", dateOfAppointment=" + timeOfAppointment +
                 '}' + '\n';
     }
 }

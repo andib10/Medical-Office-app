@@ -9,10 +9,8 @@ import staff.HeadDoctor;
 import staff.MedicalStaff;
 import staff.Nurse;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class Service {
     public static Service serviceInstance = null;
@@ -123,15 +121,15 @@ public class Service {
                 String diagnosis = scanner.next();
                 System.out.println("How many medication do they take? If none, type 0.");
                 int medsnr = scanner.nextInt();
-                String[] medications;
+                Vector<String> medications;
                 if (medsnr != 0) {
                     System.out.println("Type the names of the medications one by one:");
-                    medications = new String[medsnr];
+                    medications = new Vector<String>();
                     for (int i = 0; i < medsnr; i++) {
-                        medications[i] = scanner.next();
+                        medications.add(scanner.next());
                     }
                 } else {
-                    medications = new String[]{"-"};
+                    medications = new Vector<String>();
                 }
                 Patient specialPatient = new SpecialPatient(name, gender, phone, age, cnp, diagnosis, medsnr, medications);
                 patients.add(specialPatient);
@@ -152,7 +150,7 @@ public class Service {
     }
 
     public void showPatients() {
-        System.out.println("Current Patirnts:");
+        System.out.println("Current Patients:");
         for(var i : patients)
             System.out.println(i);
     }
@@ -211,9 +209,15 @@ public class Service {
                 med = null;
                 System.out.println("Invalid type of consultation. Try again!");
         }
-        System.out.println("Date (dd/mm/yyyy):");
+        System.out.println("Date (dd-mm-yyyy--hh-mm):");
         String date = scanner.next();
-        Appointment appointment = new Appointment(med, patient, date);
+        int day = Integer.parseInt(date.substring(0, 2));
+        int month = Integer.parseInt(date.substring(3, 5));
+        int year = Integer.parseInt(date.substring(6, 10));
+        int hour = Integer.parseInt(date.substring(12, 14));
+        int minute = Integer.parseInt(date.substring(15, 17));
+        LocalDateTime time = LocalDateTime.of(year, month, day, hour, minute);
+        Appointment appointment = new Appointment(med, patient, time);
         appointments.add(appointment);
         System.out.println("Appointment created!");
 

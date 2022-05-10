@@ -1,14 +1,13 @@
 package patient;
 
-import java.util.Arrays;
 import java.util.Vector;
 
 public class SpecialPatient extends Patient {
     private String diagnosis;
     private int medsNumber;
-    private String[] medication;
+    private Vector<String> medication;
 
-    public SpecialPatient(String name, String gender, String phoneNumber, int age, String CNP, String diagnosis, int medsNumber, String[] medication) {
+    public SpecialPatient(String name, String gender, String phoneNumber, int age, String CNP, String diagnosis, int medsNumber, Vector<String> medication) {
         super(name, gender, phoneNumber, age, CNP);
         this.diagnosis = diagnosis;
         this.medsNumber = medsNumber;
@@ -26,7 +25,7 @@ public class SpecialPatient extends Patient {
                 ", CNP='" + CNP + '\'' +
                 ", diagnosis='" + diagnosis + '\'' +
                 ", medsNumber='" + medsNumber + '\'' +
-                ", medication=" + Arrays.toString(medication) +
+                ", medication=" + medication +
                 '}' + '\n';
     }
 }
