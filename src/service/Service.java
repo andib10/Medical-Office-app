@@ -66,6 +66,10 @@ public class Service {
         }
     }
 
+    public void addMedicalStaff(MedicalStaff m) {
+        staff.add(m);
+    }
+
     public void showStaff() {
         System.out.println("Current Medical Staff:");
         for(var i : staff)
@@ -136,6 +140,10 @@ public class Service {
             }
             default -> System.out.println("Invalid type of patient. Try again!");
         }
+    }
+
+    public void addPatient(Patient p) {
+        patients.add(p);
     }
 
     public Patient searchPatient(int id) {
@@ -221,6 +229,9 @@ public class Service {
         appointments.add(appointment);
         System.out.println("Appointment created!");
 
+    }
+    public void addAppointment(Appointment app) {
+        appointments.add(app);
     }
 
     public void showAppointments() {

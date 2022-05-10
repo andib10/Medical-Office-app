@@ -23,6 +23,15 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
         Service service = Service.getInstance();
+
+        ReadCSV read = ReadCSV.getInstance();
+        read.readNurse();
+        read.readCardiologist();
+        read.readHeadDoctor();
+        read.readNormalPatient();
+        read.readSpecialPatient();
+        read.readAppointment();
+
         menu();
         System.out.println("Command:");
         int option = scanner.nextInt();
