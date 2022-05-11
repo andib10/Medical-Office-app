@@ -32,4 +32,7 @@ public class Cardiologist extends MedicalStaff{
         System.out.println("Salary: " + calculateSalary() + '\n');
     }
 
+    public int getExperienceLevel() {
+        return experienceLevel;
+    }
 }

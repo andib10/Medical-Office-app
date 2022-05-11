@@ -28,4 +28,16 @@ public class SpecialPatient extends Patient {
                 ", medication=" + medication +
                 '}' + '\n';
     }
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public int getMedsNumber() {
+        return medsNumber;
+    }
+
+    public Vector<String> getMedication() {
+        return medication;
+    }
 }

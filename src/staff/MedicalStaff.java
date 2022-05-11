@@ -19,6 +19,10 @@ public abstract class MedicalStaff extends Person {
         return medicId;
     }
 
+    public double getStartingSalary() {
+        return startingSalary;
+    }
+
     public abstract double calculateSalary();
 
     public abstract void displayMedicalStaff();

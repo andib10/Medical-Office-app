@@ -30,4 +30,8 @@ public class HeadDoctor extends MedicalStaff{
         System.out.println(toString());
         System.out.println("Salary: " + calculateSalary() + '\n');
     }
+
+    public int getBonus() {
+        return bonus;
+    }
 }

@@ -19,4 +19,8 @@ public abstract class Patient extends Person {
     public int getPatientId() {
         return patientId;
     }
+
+    public String getCNP() {
+        return CNP;
+    }
 }

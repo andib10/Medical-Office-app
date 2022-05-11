@@ -21,4 +21,7 @@ public class NormalPatient extends Patient{
                 '}' + '\n';
     }
 
+    public String getInsuranceId() {
+        return insuranceId;
+    }
 }

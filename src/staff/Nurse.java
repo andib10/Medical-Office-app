@@ -31,5 +31,7 @@ public class Nurse extends MedicalStaff{
         System.out.println("Salary: " + calculateSalary() + '\n');
     }
 
-
+    public int getHours() {
+        return hours;
+    }
 }

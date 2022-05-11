@@ -37,4 +37,16 @@ public class Appointment {
                 ", dateOfAppointment=" + timeOfAppointment +
                 '}' + '\n';
     }
+
+    public MedicalStaff getMedic() {
+        return medic;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public LocalDateTime getTimeOfAppointment() {
+        return timeOfAppointment;
+    }
 }

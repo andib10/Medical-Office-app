@@ -9,6 +9,7 @@ import staff.HeadDoctor;
 import staff.MedicalStaff;
 import staff.Nurse;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -64,6 +65,8 @@ public class Service {
             }
             default -> System.out.println("Invalid type of medical staff. Try again!");
         }
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Hire medical staff");
     }
 
     public void addMedicalStaff(MedicalStaff m) {
@@ -74,6 +77,9 @@ public class Service {
         System.out.println("Current Medical Staff:");
         for(var i : staff)
             i.displayMedicalStaff();
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Display the medical staff");
     }
 
     public MedicalStaff searchMedicalStaff(int id) {
@@ -95,8 +101,41 @@ public class Service {
         if(medStaff == null)
             return;
         staff.remove(medStaff);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Fire medical staff");
+
     }
 
+    public ArrayList<Nurse> getNurses() {
+        ArrayList<Nurse> nurses = new ArrayList<>();
+        for(var i : staff) {
+            if(i instanceof Nurse) {
+                nurses.add((Nurse)i);
+            }
+        }
+        return nurses;
+    }
+
+    public ArrayList<Cardiologist> getCardiologists() {
+        ArrayList<Cardiologist> cardiologists = new ArrayList<>();
+        for(var i : staff) {
+            if(i instanceof Cardiologist) {
+                cardiologists.add((Cardiologist) i);
+            }
+        }
+        return cardiologists;
+    }
+
+    public ArrayList<HeadDoctor> getHeadDoctors() {
+        ArrayList<HeadDoctor> headDoctors = new ArrayList<>();
+        for(var i : staff) {
+            if(i instanceof HeadDoctor) {
+                headDoctors.add((HeadDoctor) i);
+            }
+        }
+        return headDoctors;
+    }
 
     public void addPatient() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
@@ -140,6 +179,9 @@ public class Service {
             }
             default -> System.out.println("Invalid type of patient. Try again!");
         }
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Register a patient");
     }
 
     public void addPatient(Patient p) {
@@ -161,6 +203,9 @@ public class Service {
         System.out.println("Current Patients:");
         for(var i : patients)
             System.out.println(i);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Display patients");
     }
 
     public void removePatient() {
@@ -171,6 +216,29 @@ public class Service {
         if(p == null)
             return;
         patients.remove(p);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Delete a patient");
+    }
+
+    public ArrayList<NormalPatient> getNormalPatients() {
+        ArrayList<NormalPatient> normalPatients = new ArrayList<>();
+        for(var i : patients) {
+            if(i instanceof NormalPatient) {
+                normalPatients.add((NormalPatient) i);
+            }
+        }
+        return normalPatients;
+    }
+
+    public ArrayList<SpecialPatient> getSpecialPatients() {
+        ArrayList<SpecialPatient> specialPatients = new ArrayList<>();
+        for(var i : patients) {
+            if(i instanceof SpecialPatient) {
+                specialPatients.add((SpecialPatient) i);
+            }
+        }
+        return specialPatients;
     }
 
     public void createAppointment() {
@@ -229,6 +297,9 @@ public class Service {
         appointments.add(appointment);
         System.out.println("Appointment created!");
 
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Create an appointment");
+
     }
     public void addAppointment(Appointment app) {
         appointments.add(app);
@@ -238,6 +309,9 @@ public class Service {
         System.out.println("Current appointments:");
         for(var i : appointments)
             System.out.println(i);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Display appointments");
     }
 
     public Appointment findAppointment(int id) {
@@ -260,13 +334,30 @@ public class Service {
             return;
         }
         appointments.remove(app);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Cancel an appointment");
+    }
+
+    public ArrayList<Appointment> getAppointments() {
+        ArrayList<Appointment> app = new ArrayList<>();
+        for(var i : appointments) {
+            app.add(i);
+            }
+        return app;
     }
 
     public void sortStaffBySalary() {
         Collections.sort(staff, (o1, o2) -> (int) (o1.calculateSalary() - o2.calculateSalary()));
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Sort medical staff by salary");
     }
 
     public void sortPatientsByName() {
         Collections.sort(patients, (o1, o2) -> o1.getName().compareTo(o2.getName()));
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Sort patients by name");
     }
 }

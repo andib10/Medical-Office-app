@@ -20,4 +20,12 @@ public abstract class Person {
     public int getAge() {
         return age;
     }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 }

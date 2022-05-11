@@ -32,6 +32,8 @@ public class Main {
         read.readSpecialPatient();
         read.readAppointment();
 
+        WriteCSV write = WriteCSV.getInstance();
+
         menu();
         System.out.println("Command:");
         int option = scanner.nextInt();
@@ -78,5 +80,12 @@ public class Main {
             option = scanner.nextInt();
         }
 
+        write.writeNurse();
+        write.writeCardiologist();
+        write.writeHeadDoctor();
+        write.writeNormalPatient();
+        write.writeSpecialPatient();
+        write.writeAppointment();
     }
+
 }
