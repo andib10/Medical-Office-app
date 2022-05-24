@@ -1,6 +1,8 @@
 package service;
 
 import appointment.Appointment;
+import dbRepository.MedRepository;
+import dbRepository.PatientRepository;
 import patient.NormalPatient;
 import patient.Patient;
 import patient.SpecialPatient;
@@ -10,6 +12,7 @@ import staff.MedicalStaff;
 import staff.Nurse;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -19,6 +22,26 @@ public class Service {
     private ArrayList<Patient> patients = new ArrayList<>();
     private ArrayList<Appointment> appointments = new ArrayList<>();
 
+    static MedRepository medRepository;
+
+    static {
+        try {
+            medRepository = new MedRepository();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static PatientRepository patRepository;
+
+    static {
+        try {
+            patRepository = new PatientRepository();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private Service() {}
 
     public static Service getInstance() {
@@ -27,6 +50,7 @@ public class Service {
         }
         return serviceInstance;
     }
+
 
 
     public void addMedicalStaff() {
@@ -72,6 +96,76 @@ public class Service {
     public void addMedicalStaff(MedicalStaff m) {
         staff.add(m);
     }
+
+    public void addHeadDoctorDb() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Medical Staff data");
+        System.out.println("Name:");
+        String name = scanner.next();
+        System.out.println("Gender:");
+        String gender = scanner.next();
+        System.out.println("Phone number:");
+        String phone = scanner.next();
+        System.out.println("Age:");
+        int age = scanner.nextInt();
+        System.out.println("Starting salary:");
+        double startingSalary = scanner.nextDouble();
+        System.out.println("How high is their bonus?");
+        int bonus = scanner.nextInt();
+        HeadDoctor headDoc = new HeadDoctor(name, gender, phone, age, startingSalary, bonus);
+        medRepository.saveHeadDoctor(headDoc);
+        staff.add(headDoc);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Add Head Doctor to DB");
+    }
+
+    public void addNurseDb() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Medical Staff data");
+        System.out.println("Name:");
+        String name = scanner.next();
+        System.out.println("Gender:");
+        String gender = scanner.next();
+        System.out.println("Phone number:");
+        String phone = scanner.next();
+        System.out.println("Age:");
+        int age = scanner.nextInt();
+        System.out.println("Starting salary:");
+        double startingSalary = scanner.nextDouble();
+        System.out.println("How many hours does he/she work in a week?");
+        int hours = scanner.nextInt();
+        Nurse nurse = new Nurse(name, gender, phone, age, startingSalary, hours);
+        medRepository.saveNurse(nurse);
+        staff.add(nurse);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Add Nurse to DB");
+    }
+
+    public void addCardiologistDb() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Medical Staff data");
+        System.out.println("Name:");
+        String name = scanner.next();
+        System.out.println("Gender:");
+        String gender = scanner.next();
+        System.out.println("Phone number:");
+        String phone = scanner.next();
+        System.out.println("Age:");
+        int age = scanner.nextInt();
+        System.out.println("Starting salary:");
+        double startingSalary = scanner.nextDouble();
+        System.out.println("What is their experience level?");
+        int exp = scanner.nextInt();
+        Cardiologist cardiologist = new Cardiologist(name, gender, phone, age, startingSalary, exp);
+        medRepository.saveCardiologist(cardiologist);
+        staff.add(cardiologist);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Add Cardiologist to DB");
+    }
+
 
     public void showStaff() {
         System.out.println("Current Medical Staff:");
@@ -137,6 +231,138 @@ public class Service {
         return headDoctors;
     }
 
+    public List<HeadDoctor> selectHeadDoctorsDb() {
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Display Head Doctors from DB");
+        return medRepository.selectAllHeadDoctors();
+    }
+
+    public List<Nurse> selectNursesDb() {
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Display Nurses from DB");
+        return medRepository.selectAllNurses();
+    }
+
+    public List<Cardiologist> selectCardiologistsDb() {
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Display Cardiologists from DB");
+        return medRepository.selectAllCardiologists();
+    }
+
+    public HeadDoctor selectHeadDoctorDb(int id) {
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Display Head Doctor from DB");
+        return medRepository.selectHeadDoctor(id);
+    }
+
+    public Nurse selectNurseDb(int id) {
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Display Nurse from DB");
+        return medRepository.selectNurse(id);
+    }
+
+    public Cardiologist selectCardiologistDb(int id) {
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Display Cardiologist from DB");
+        return medRepository.selectCardiologist(id);
+    }
+
+    public void changeHeadDoctorPhoneNumber() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Type the ID of the Head Doctor whose phone number you want to change:");
+        int id = scanner.nextInt();
+        System.out.println("TYpe the new phone number");
+        String newNumber = scanner.next();
+        if(medRepository.uppdateHeadDoctor(id, newNumber))
+            System.out.println("Phone number changed!");
+        else
+            System.out.println("Couldn't change the number");
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Update Head Doctor from DB");
+    }
+
+    public void changeNursePhoneNumber() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Type the ID of the Nurse whose phone number you want to change:");
+        int id = scanner.nextInt();
+        System.out.println("TYpe the new phone number");
+        String newNumber = scanner.next();
+        if(medRepository.uppdateNurse(id, newNumber))
+            System.out.println("Phone number changed!");
+        else
+            System.out.println("Couldn't change the number");
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Update Nurse from DB");
+    }
+
+    public void changeCardiologistPhoneNumber() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Type the ID of the Cardiologist whose phone number you want to change:");
+        int id = scanner.nextInt();
+        System.out.println("TYpe the new phone number");
+        String newNumber = scanner.next();
+        if(medRepository.uppdateCardiologist(id, newNumber))
+            System.out.println("Phone number changed!");
+        else
+            System.out.println("Couldn't change the number");
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Update Cardiologist from DB");
+    }
+
+
+    public void deleteHeadDoctorDb() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Type the ID for the Head Doctor you want to remove:");
+        int id = scanner.nextInt();
+        HeadDoctor doc = medRepository.selectHeadDoctor(id);
+        if(doc == null) {
+            System.out.println("Invalid ID");
+            return;
+        }
+        medRepository.deleteHeadDoctor(id);
+        staff.remove(doc);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Delete Head Doctor from DB");
+    }
+
+    public void deleteNurseDb() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Type the ID for the Nurse you want to remove:");
+        int id = scanner.nextInt();
+        Nurse nurse = medRepository.selectNurse(id);
+        if(nurse == null) {
+            System.out.println("Invalid ID");
+            return;
+        }
+        medRepository.deleteNurse(id);
+        staff.remove(nurse);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Delete Nurse from DB");
+    }
+
+    public void deleteCardiologistDb() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Type the ID for the Cardiologist you want to remove:");
+        int id = scanner.nextInt();
+        Cardiologist card = medRepository.selectCardiologist(id);
+        if(card == null) {
+            System.out.println("Invalid ID");
+            return;
+        }
+        medRepository.deleteCardiologist(id);
+        staff.remove(card);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Delete Cardiologist from DB");
+    }
+
+
+
     public void addPatient() {
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");
         System.out.println("Patients data");
@@ -188,7 +414,152 @@ public class Service {
         patients.add(p);
     }
 
-    public Patient searchPatient(int id) {
+    public void addNormalPatientDb() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Patients data");
+        System.out.println("Name:");
+        String name = scanner.next();
+        System.out.println("Gender:");
+        String gender = scanner.next();
+        System.out.println("Phone number:");
+        String phone = scanner.next();
+        System.out.println("Age:");
+        int age = scanner.nextInt();
+        System.out.println("CNP:");
+        String cnp = scanner.next();
+        System.out.println("Insurance Number:");
+        String insurance = scanner.next();
+        NormalPatient normalPatient = new NormalPatient(name, gender, phone, age, cnp, insurance);
+        patients.add(normalPatient);
+        patRepository.saveNormalPatient(normalPatient);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Add normal patient to DB");
+    }
+
+    public void addSpecialPatientDb() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Patients data");
+        System.out.println("Name:");
+        String name = scanner.next();
+        System.out.println("Gender:");
+        String gender = scanner.next();
+        System.out.println("Phone number:");
+        String phone = scanner.next();
+        System.out.println("Age:");
+        int age = scanner.nextInt();
+        System.out.println("CNP:");
+        String cnp = scanner.next();
+        System.out.println("Diagnosis:");
+        String diagnosis = scanner.next();
+        System.out.println("How many medication do they take? If none, type 0.");
+        int medsnr = scanner.nextInt();
+        Vector<String> medications;
+        if (medsnr != 0) {
+            System.out.println("Type the names of the medications one by one:");
+            medications = new Vector<String>();
+            for (int i = 0; i < medsnr; i++) {
+                medications.add(scanner.next());
+            }
+        } else {
+            medications = new Vector<String>();
+        }
+        SpecialPatient specialPatient = new SpecialPatient(name, gender, phone, age, cnp, diagnosis, medsnr, medications);
+        patients.add(specialPatient);
+        patRepository.saveSpecialPatient(specialPatient);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Add special patient to DB");
+    }
+
+    public List<NormalPatient> selectNormalPatientsDb() {
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Display Normal Patients from DB");
+        return patRepository.selectAllNormalPatients();
+    }
+
+    public List<SpecialPatient> selectSpecialPatientsDb() {
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Display Special Patients from DB");
+        return patRepository.selectAllSpecialPatients();
+    }
+
+    public NormalPatient selectNormalPatientDb(int id) {
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Display Normal Patient from DB");
+        return patRepository.selectNormalPatient(id);
+    }
+
+    public SpecialPatient selectSpecialPatientDb(int id) {
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Display Special Patient from DB");
+        return patRepository.selectSpecialPatient(id);
+    }
+
+    public void changeNormalPatientPhoneNumber() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Type the ID of the Normal Patient whose phone number you want to change:");
+        int id = scanner.nextInt();
+        System.out.println("Type the new number");
+        String number = scanner.next();
+        if(patRepository.updateNormalPatient(id, number))
+            System.out.println("Number changed!");
+        else
+            System.out.println("Invalid ID");
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Update Normal Patient from DB");
+    }
+
+    public void changeSpecialPatientPhoneNumber() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Type the ID of the Special Patient whose phone number you want to change:");
+        int id = scanner.nextInt();
+        System.out.println("Type the new number");
+        String number = scanner.next();
+        if (patRepository.updateSpecialPatient(id, number))
+            System.out.println("Number changed!");
+        else
+            System.out.println("Invalid ID");
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Update Special Patient from DB");
+    }
+
+    public void deleteNormalPatientDb() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Type the ID for the Normal Patient you want to remove:");
+        int id = scanner.nextInt();
+        NormalPatient pat = patRepository.selectNormalPatient(id);
+        if(pat == null) {
+            System.out.println("Invalid ID");
+            return;
+        }
+        patRepository.deleteNormalPatient(id);
+        patients.remove(pat);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Delete Normal Patient from DB");
+    }
+
+    public void deleteSpecialPatientDb() {
+        Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Type the ID for the Special Patient you want to remove:");
+        int id = scanner.nextInt();
+        SpecialPatient pat = patRepository.selectSpecialPatient(id);
+        if(pat == null) {
+            System.out.println("Invalid ID");
+            return;
+        }
+        patRepository.deleteSpecialPatient(id);
+        patients.remove(pat);
+
+        WriteCSV audit = WriteCSV.getInstance();
+        audit.writeAudit("Delete Special Patient from DB");
+    }
+
+
+        public Patient searchPatient(int id) {
         Patient found = null;
         for(Patient i : patients) {
             if(i.getPatientId() == id) {

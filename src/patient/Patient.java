@@ -23,4 +23,8 @@ public abstract class Patient extends Person {
     public String getCNP() {
         return CNP;
     }
+
+    public void setPatientId(int patientId) {
+        this.patientId = patientId;
+    }
 }

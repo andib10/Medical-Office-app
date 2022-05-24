@@ -22,3 +22,27 @@ Sort patients by name,2022-05-11 03:45:53.554
 Display patients,2022-05-11 03:45:53.555
 Cancel an appointment,2022-05-11 03:46:11.715
 Display appointments,2022-05-11 03:46:15.649
+Hire medical staff,2022-05-24 15:34:13.444
+Display the medical staff,2022-05-24 15:34:19.936
+Sort medical staff by salary,2022-05-24 15:34:49.112
+Display the medical staff,2022-05-24 15:34:49.115
+Add Head Doctor to DB,2022-05-24 15:35:15.794
+Add Nurse to DB,2022-05-24 15:35:35.175
+Add Cardiologist to DB,2022-05-24 15:35:58.343
+Display Head Doctors from DB,2022-05-24 15:37:09.436
+Display Nurses from DB,2022-05-24 15:37:47.533
+Display Cardiologists from DB,2022-05-24 15:37:53.83
+Delete Head Doctor from DB,2022-05-24 15:38:20.586
+Display Head Doctors from DB,2022-05-24 15:38:25.087
+Add normal patient to DB,2022-05-24 15:38:45.763
+Add special patient to DB,2022-05-24 15:39:17.425
+Update Head Doctor from DB,2022-05-24 15:40:32.846
+Display Head Doctors from DB,2022-05-24 15:40:37.672
+Update Normal Patient from DB,2022-05-24 15:41:00.917
+Display Normal Patients from DB,2022-05-24 15:42:44.38
+Display Special Patients from DB,2022-05-24 15:42:47.136
+Add Cardiologist to DB,2022-05-24 15:45:08.446
+Display Cardiologists from DB,2022-05-24 15:45:24.41
+Sort medical staff by salary,2022-05-24 15:45:32.934
+Display the medical staff,2022-05-24 15:45:32.939
+Display Cardiologists from DB,2022-05-24 15:46:05.929

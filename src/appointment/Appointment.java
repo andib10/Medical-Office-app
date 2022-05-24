@@ -7,14 +7,14 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Appointment {
-    private int AppointmentId;
+    private int appointmentId;
     private MedicalStaff medic;
     private Patient patient;
     private LocalDateTime timeOfAppointment;
     static int id = 0;
 
     {
-        this.AppointmentId = ++id;
+        this.appointmentId = ++id;
     }
 
     public Appointment(MedicalStaff medic, Patient patient, LocalDateTime timeOfAppointment) {
@@ -24,14 +24,14 @@ public class Appointment {
     }
 
     public int getAppointmentId() {
-        return AppointmentId;
+        return appointmentId;
     }
 
 
     @Override
     public String toString() {
         return "Appointment{" +
-                "AppointmentId=" + AppointmentId +
+                "AppointmentId=" + appointmentId +
                 ", medic=" + medic +
                 ", patient=" + patient +
                 ", dateOfAppointment=" + timeOfAppointment +

@@ -23,6 +23,10 @@ public abstract class MedicalStaff extends Person {
         return startingSalary;
     }
 
+    public void setMedicId(int medicId) {
+        this.medicId = medicId;
+    }
+
     public abstract double calculateSalary();
 
     public abstract void displayMedicalStaff();
